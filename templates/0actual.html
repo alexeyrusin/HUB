@@ -1,0 +1,81 @@
+Actual
+
+
+{{data}}
+
+{% for u in data %}
+	<div class="table-responsive"> 
+
+		<table class="table table-bordered ">
+		  <thead>
+			<tr>
+			{% if u[5] == 0 %}в работе
+			{% elif u[5] == 1 %}утвержден директором
+			{% elif u[5] == 2 %}требует доработки
+			{% elif u[5] == 3 %}в архиве
+			{% elif u[5] == 4 %}утвержден обобщителем
+			{% else %}нет статуса
+			{% endif %}
+				<td colspan='3' class="success">{{u[2]}} {{u[4]}} <button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Отправить в архив</button>	</td>			
+			</tr>
+		  </thead>
+		  <tbody>
+
+			<tr>
+				<td>Общая часть</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			<tr>
+			  <td>Информационная карта</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			
+			<tr>
+			  <td>Техническое задание</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			
+			<tr>
+			  <td>Обоснование НМЦК</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>		
+
+			<tr>
+			  <td>Проект контракта</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			
+			<tr>
+			  <td>Объединенный файл</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>		
+			
+		  </tbody>
+		</table>
+		
+	</div>
+{% endfor %}
+
+<script>
+$(".to_archive").click(function(){
+	var one = $(this).val()
+	alert("/to_archive/"+one);
+    $.get("/to_archive/"+one,
+    {
+		
+    },
+    function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+        $(document).ready(function(){
+			
+        });
+	alert('запись: (' +one+ ') удалена');
+});
+</script>	

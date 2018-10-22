@@ -1,0 +1,94 @@
+
+  <table class="table table-bordered">
+        <caption>
+       
+        </caption>
+            <thead>
+				<th>Осталось дней</th>
+                <th>Входящий номер документа, дата поступления документа</th>
+                <th>Информация о заявителе	ФИО, адрес, категория, телефон, откуда обратился заявитель</th>
+                <th>Куда обратился заявитель, номер, дата</th>
+                <th>Откуда поступил документ, номер и дата</th>	
+                <th>Краткое содержание поднятых вопросов, тематика обращения, резолюция руководства</th>
+                <th>Контрольный срок исполнения</th>
+                <th>Фактический срок исполнения</th>
+                <th>Исполнитель, номер дела в котором хранится документ, принятое решение</th>
+				<th>Доп. контроль</th>
+				<th>Дата дополнительного контроля</th>
+				<th></th>
+            </thead>
+
+{{cur_date[0][0:4]}}{{cur_date[0][5:7]}}{{cur_date[0][8:11]}}
+{% for d in data %}
+
+	
+<script type="text/javascript" language="JavaScript"> 
+function daysLeftNewYear() {  
+  today = new Date() 
+  //Можно установить любую дату 
+  nextDate = new Date("'{{d[16][5:7]}} {{d[16][8:11]}}, {{d[16][0:4]}}") 
+  //Количество миллисекунд в одном дне 
+  msPerDay = 24*60*60*1000; 
+  //Высчитываем количество дней 
+  daysLeft = Math.round((nextDate.getTime() - today.getTime())/msPerDay); 
+  dayname = "" 
+  ds = ""+daysLeft 
+  //Вырезаем последнею цифру 
+  dd=parseInt(ds.substr(ds.length-1)) 
+  //Склоняем слово ДЕНЬ 
+  if(daysLeft>4&&daysLeft<21)dayname=" дней" 
+  else 
+  if(dd==1)dayname=" день" 
+  else 
+  if(dd==2||dd==3||dd==4)dayname=" дня" 
+  else dayname=" дней" 
+  //Выводим надпись в документ 
+  $('.{{d[0]}}').html(daysLeft);
+  if(daysLeft<5)document.getElementsByClassName('a{{d[0]}}')[0].setAttribute("style", "background-color: #fa5457;");
+  else if(daysLeft<10)document.getElementsByClassName('a{{d[0]}}')[0].setAttribute("style", "background-color: #f6d51f;");
+  else document.getElementsByClassName('a{{d[0]}}')[0].setAttribute("style", "background-color: #5fa55a;");
+} 
+</script> 
+<script>
+$(document).ready(function(){
+if (daysLeft < 4) $(#{{d[0]}}).html('hehehehe')
+else {alert(daysLeft)}
+});
+
+</script>
+<script type="text/javascript" language="JavaScript">daysLeftNewYear()</script>	
+		<tr class='a{{d[0]}}'>
+			<td class='{{d[0]}}'></td>
+            <td>{{d[3]}},{{d[4]}}</td>
+            <td>{{d[5]}}, {{d[6]}}</td>
+			<td>{{d[7]}}, {{d[8]}}, {{d[9]}}</td>
+			<td>{{d[10]}}, {{d[11]}}, {{d[12]}}</td>
+			<td>{{d[13]}}, {{d[14]}}, {{d[15]}}</td>
+			<td>{{d[16]}}</td>
+            <td>{{d[17]}}</td>
+			<td>{{d[18]}}, {{d[19]}}, {{d[20]}}</td>
+			<td>{{d[21]}}</td>
+            <td>{{d[22]}}</td>			
+			<td>
+			<form action="status0" method="POST">
+            <input type="hidden" name="status0" value="{{d[0]}}" class="btn btn-danger">
+            <input type="submit"  class="btn btn-success" value="Вернуть в работу"/>
+            </form>
+			
+			<br>
+			<form action="edit" method="POST">
+            <input type="hidden" name="edit" value="{{d[0]}}" class="btn btn-danger">
+            <input type="submit"  class="btn btn-info" value="Редактировать"/>			
+            </form>
+			
+			
+			<br>
+			<form action="delete" method="POST">
+            <input type="hidden" name="delete" value="{{d[0]}}" class="btn btn-danger">
+            <input type="submit"  class="btn btn-danger" value="Удалить"/>
+			</form>
+			</td>
+        </tr>
+{% endfor %}
+
+    </table>

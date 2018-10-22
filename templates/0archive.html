@@ -1,0 +1,70 @@
+archive
+{{data}}
+
+{% for u in data %}
+	<div class="table-responsive"> 
+
+		<table class="table table-bordered ">
+		  <thead>
+			<tr>
+				<td colspan='3' class="success">{{u[2]}} {{u[4]}} <button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Вернуть на доработку</button>	</td>			
+			</tr>
+		  </thead>
+		  <tbody>
+
+			<tr>
+				<td>Общая часть</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			<tr>
+			  <td>Информационная карта</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			
+			<tr>
+			  <td>Техническое задание</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			
+			<tr>
+			  <td>Обоснование НМЦК</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>		
+
+			<tr>
+			  <td>Проект контракта</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>
+			
+			<tr>
+			  <td>Объединенный файл</td>
+				<td></td>
+				<td>{{u[0]}}</td>
+			</tr>		
+			
+		  </tbody>
+		</table>
+		
+	</div>
+{% endfor %}
+
+<script>
+$(".to_archive").click(function(){
+	var one = $(this).val()
+    $.get("/from_archive/"+one,
+    {
+		
+    },
+    function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });
+        $(document).ready(function(){
+			
+        });
+});
+</script>	

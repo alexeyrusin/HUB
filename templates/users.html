@@ -1,0 +1,103 @@
+
+<form action="/users" method="POST">
+
+<p><input class="form-control form-control-lg" type="text" name="login" placeholder='*логин'></p>
+<p><input class="form-control form-control-lg" type="text" name="password" placeholder='*пароль'></p>
+<p><input class="form-control form-control-lg" type="text" name="name" placeholder='имя'></p>
+
+  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">*тип учетной записи</label>
+  <select class="custom-select my-1 mr-sm-2"  name="rank"  id="inlineFormCustomSelectPref">
+    <option selected value='2'>Исполнитель</option>
+	<option value='1'>Отв. За обобщение информации</option>
+    <option value="0">Директор</option>
+  </select>
+
+<p><input class="form-control form-control-lg" type="text" name="rank_name" placeholder='должность'></p>
+<p><button class="btn btn-primary" type="submit">Добавить пользователя</button></p>
+
+</form>
+
+<div class="table-responsive"> 
+	<table class="table table-bordered">
+	  <thead>
+		<tr>
+		  <th>id</th>
+		  <th>логин</th>
+		  <th>пароль</th>
+		  <th>права доступа</th>
+		  <th>должность</th>
+		  <th>имя</th>		  
+		</tr>
+	  </thead>
+	  <tbody>
+	  {% for u in users %}
+		<tr>
+		  <th scope="row">{{u[0]}}</th>
+		  <td>{{u[1]}}</td>
+		  <td>{{u[2]}}</td>
+		  
+		  <td>
+			{% if u[3]==0 %}
+				Директор
+			{% elif u[3]==1 %}
+				Начальник
+			{% elif u[3]==2 %}
+				Исполнитель
+			{% endif %}
+		  </td>
+		  
+		  <td>{{u[4]}}</td>
+		  <td>{{u[5]}}</td>
+		</tr>
+		{% endfor %}
+
+	  </tbody>
+	</table>
+</div>
+
+Основная матрица доступа
+<div class="table-responsive"> 
+	<table class="table table-bordered">
+	  <thead>
+		<tr>
+		  <th>Название задачи</th>
+		  <th colspan='2'>Исполнитель задачи</th>	
+		</tr>
+	  </thead>
+	  <tbody>
+	{% for e in executor %}
+		<tr>
+		 <td>
+		 
+		 	{% if e[0]==1 %}
+				Общая часть
+		 	{% elif e[0]==2 %}
+				Информационная карта
+		 	{% elif e[0]==3 %}
+				Техническое задание
+		 	{% elif e[0]==4 %}
+				Обоснование НМЦК
+		 	{% elif e[0]==5 %}
+				Проект контракта
+			{% endif %}
+		 
+		 </td>
+		 
+		 <td>
+	  {% for u in users %}
+			{% if e[1]==u[0] %}
+				{{u[5]}} - {{u[4]}}
+			{% endif %}
+		{% endfor %}
+		</td>
+		
+		<td>
+		удалить
+		</td>
+		</tr>
+	{% endfor %}
+
+	  </tbody>
+	</table>
+</div>
+

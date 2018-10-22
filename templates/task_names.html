@@ -1,0 +1,8 @@
+<div class="form-group">
+    <label for="user_control_task">Имя задачи</label>
+    <select class="form-control" size="5" name="task_name" id='task_name_id'>
+		{% for x in data %}
+			<option value="{{x[0]}}">{{x[1]}}</option> 
+		{% endfor %}
+    </select>
+</div>

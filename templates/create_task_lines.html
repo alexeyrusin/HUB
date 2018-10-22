@@ -1,0 +1,161 @@
+{% include '/header.html' %}
+{% include '/menu.html' %}
+
+<div class="container">
+	<div id='main'>
+	<div id='data'>data</div>
+
+	
+<form action="/create_task_lines/{{value}}" method="POST">
+	
+<div id='task_names'></div>
+<div class="form-group">
+	<input type="text" class="form-control" id="task_insert" placeholder='новая категория'>
+</div>
+
+
+<div class="form-group">
+	<button type="button" class='btn btn-success btn-block' id='add_task_names'>Добавить категорию</button>
+	<button type="button" class='btn btn-danger btn-block' id='remove_task_names'>Удалить категорию</button>
+</div>
+
+  <div class="form-group">
+    <label for="main_comment">Комментарий</label>
+    <textarea class="form-control" rows="3" name="main_comment" id="main_comment" placeholder='комментарий'></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="inputDate">Контрольная дата</label>
+    <input type="date" class="form-control" name="contr_date" id='contr_date'>
+  </div>
+  
+	<div id='user_control_task2'>user_control_task</div>
+
+	
+ 	<button class="btn btn-primary btn-lg btn-block" type='button' id='create_task_lines'>Добавить задачу</button>	
+
+
+</form>
+
+	</div>
+</div><!-- container -->
+
+</body>
+
+
+
+
+
+<!-- SHOW CATEGORY-->
+<script>
+        $(document).ready(function(){
+			user_control_task();
+			task_names();
+        });
+		
+		function user_control_task()
+        {
+            $.ajax({
+                url: "/user_control_task",
+                cache: false,
+                success: function(html){
+                    $("#user_control_task2").html(html);
+                }
+            });
+        }
+		
+		function task_names()
+        {
+            $.ajax({
+                url: "/task_names",
+                cache: false,
+                success: function(html){
+                    $("#task_names").html(html);
+                }
+            });
+        }		
+</script>
+
+<!-- CREATE\DELETE TASK NAMES-->
+<script>
+$("#add_task_names").click(function(){
+	var one = $('#task_insert').val()
+    $.post("/add_task_names",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+			task_names();
+        });
+	alert('запись: (' +one+ ') добавлена');
+});
+</script>
+
+<script>
+$("#remove_task_names").click(function(){
+	var one = $('#task_name_id').val()
+    $.post("/remove_task_names",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+			task_names();
+        });
+	alert('запись: (' +one+ ') удалена');
+});
+</script>
+
+
+<!-- Отображение информации на главной странице согласно рангу -->
+
+<script>
+$("#create_task_lines").click(function(){
+	var task_name = $('#task_name_id').val()
+	var task_id = {{value}}
+	var user_control_task = $('#user_control_task').val()
+	var contr_date = $('#contr_date').val()
+	var main_comment = $('#main_comment').val()	
+	
+    $.post("/create_task_lines/"+{{value}},
+    {
+		'task_name': task_name,
+		'task_id': task_id,
+		'user_control_task': user_control_task,
+		'contr_date': contr_date,
+		'main_comment': main_comment,			
+    },
+    function(data, status){
+
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+	alert('запись: (' +task_name+ ') добавлена');
+	edit_task_lines();
+});
+
+
+
+		function edit_task_lines()
+        {
+            $.ajax({
+                url: "/edit_task_lines/"+{{value}},
+                cache: false,
+                success: function(html){
+                    $("#data").html(html);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            edit_task_lines();
+        });
+</script>
+
+
+
+</html>

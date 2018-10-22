@@ -1,0 +1,63 @@
+<div class="table-responsive"> 
+	<table class="table table-bordered ">
+		<caption>
+			Все задачния задичи id={{value}}	
+		</caption>
+	  <thead>
+		<tr>
+			<th>id  задачи</th>
+			<th>Имя задачи</th>
+			<th>Комментарий</th>
+			<th>Контрольная дата</th>
+			<th>Ответственный</th>
+			<th>Действия</th>			
+		</tr>
+	  </thead>
+	  <tbody>
+	  {% for u in data %}
+		<tr>
+		  <td>{{u[0]}}</td>
+		  <th>
+				{% for x in task_names %}
+					{% if u[1] == x[0] %}
+						{{x[1]}}
+					{% endif %}
+				{% endfor %}
+		  </th>
+		  <td>{{u[5]}}</td>
+		  <td>{{u[4]}}</td>
+		  <td>
+				{% for x in users %}
+					{% if u[3] == x[0] %}
+						{{x[4]}} - {{x[5]}}
+					{% endif %}
+				{% endfor %}
+		  </td>
+		  <td>
+			<button type="button" class='btn btn-danger remove_task_lines'  value='{{u[0]}}'>Удалить задание</button>
+		  </td>
+		</tr>
+{% endfor %}
+
+
+	  </tbody>
+	</table>
+</div>
+
+<script>
+//delete from task lines
+$(".remove_task_lines").click(function(){
+	var two =  $(this).val()	
+    $.post("/remove_task_lines",
+    {
+		'two': two,		
+    },
+    function(data, status){
+
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+	alert('запись: (' + two +') удалена');
+	edit_task_lines();
+});
+//delete from task lines	
+</script>

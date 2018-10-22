@@ -1,0 +1,91 @@
+<style>
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+  
+}
+.badger-warning: {
+    background: #f0ad4e
+}
+</style>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">#test</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!--<a class="navbar-brand" href="/">АИС "Контроль Исполнения"</a>-->
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+		{% if session['user_rank'] == 0 %}
+            
+			
+			<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			  Задачи 
+			  <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#" id='0actual'>Актуальные</a></li>
+                <li><a href="#" id='0archive'>Архив</a></li>				
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header"></li>
+				<li><a href='#' id='create_tasks'>Создать</a></li>
+              </ul>
+            </li>	
+            <li><a href='#' class='btn' id='users'>Пользователи</a></li>
+ 
+			</ul>			
+			<ul class="nav navbar-nav navbar-right">
+		{% elif session['user_rank'] == 1 %}
+				вы обобщаете
+		{% elif session['user_rank'] == 2 %}
+				вы исполняете 
+		{% else %}
+				У Вас нет прав на выполнение каких-либо действий.
+		{% endif %}
+			<li><a href='/logout'>Выход из учетной записи {{session['user_name']}}</a></li>
+			</ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+<script>
+$(document).ready(function() {
+	var divs = {
+				'0actual': [],
+				'0archive': [],
+				'create_tasks': [],
+				'edit_tasks': [],
+				};
+				
+	function create_divs(x, y) {
+			
+			$(document).on('click', '#'+x, function() {
+
+				function show()
+				{
+					$.ajax({
+						url: '/'+x,
+						cache: false,
+						success: function(html){
+							$("#main").html(html);
+						}
+					});
+				}
+
+				$(document).ready(function(){
+					show();
+				});
+			});
+		}
+
+	$.each( divs, function( key, value ) {
+			create_divs(key, value);
+	});
+});
+</script>

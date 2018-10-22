@@ -1,0 +1,102 @@
+<form action="/create_new_tasks" method="POST">
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Название</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" name="name" placeholder='название'>
+  </div>
+
+	
+<div class="form-group">
+    <label for="type">Тип</label>
+    <select class="form-control" size="2" name="type" id='type'>
+		<option value="0">Заказчик</option> 
+		<option value="1">Уполномоченный орган</option> 
+    </select>
+</div>
+
+ 
+  <div class="form-group">
+    <label for="inputDate">Контрольная дата</label>
+    <input type="date" class="form-control" name="contr_date">
+  </div>
+
+
+	<div id='tasks_category'>tasks_category</div>
+	
+<div class="form-group">
+	<input type="text" class="form-control" id="task_insert" placeholder='новая категория'>
+</div>
+
+<div class="form-group">
+	<button type="button" class='btn btn-success' id='add_tasks_category'>Добавить категорию</button>
+	<button type="button" class='btn btn-danger' id='remove_tasks_category'>Удалить категорию</button>
+</div>
+
+
+	<button class="btn btn-primary btn-lg btn-block" type="submit">Добавить задачу</button>	
+</form>
+
+<!-- CREATE\DELETE CATEGORY-->
+<script>
+$("#add_tasks_category").click(function(){
+	var one = $('#task_insert').val()
+    $.post("/add_tasks_category",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+			show_tasks_category();
+        });
+	alert('запись: (' +one+ ') добавлена');
+});
+</script>
+
+<script>
+$("#remove_tasks_category").click(function(){
+	var one = $('#task_id').val()
+    $.post("/remove_tasks_category",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+			show_tasks_category();
+        });
+	alert('запись: (' +one+ ') удалена');
+});
+</script>	
+
+
+<!-- SHOW CATEGORY-->
+<script>
+        $(document).ready(function(){
+            show_tasks_category();
+			user_control_task();
+        });
+		
+		function show_tasks_category()
+        {
+            $.ajax({
+                url: "/tasks_category",
+                cache: false,
+                success: function(html){
+                    $("#tasks_category").html(html);
+                }
+            });
+        }
+		
+		function user_control_task()
+        {
+            $.ajax({
+                url: "/user_control_task",
+                cache: false,
+                success: function(html){
+                    $("#user_control_task").html(html);
+                }
+            });
+        }
+</script>

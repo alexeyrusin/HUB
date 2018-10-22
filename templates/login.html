@@ -1,0 +1,30 @@
+
+{% include '/header.html' %}
+
+{{users}}
+
+
+{% for user in users %}
+<p>{{user[2]}}</p>
+{% endfor %}
+
+        <div class="container">
+<style>
+    .col-lg-4{margin:0 auto;text-align:center;padding-top:80px;}
+    img{height: 180px;}
+</style>
+<div class='row'>
+    <div class="col-lg-12">
+        <h1>Вход:</h1>
+
+        <form action="/" method="POST">
+            <p><input type='text' placeholder='логин' name='login'></p>
+            <p><input type='text' placeholder='пароль' name='password'></p>
+            <button type='submit'>Вход</button>
+        </form>
+    </div>
+</div>
+
+    </div><!-- container -->
+    </body>
+</html>

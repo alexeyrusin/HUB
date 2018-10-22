@@ -1,0 +1,309 @@
+{% include '/header.html' %}
+
+<div class="container">
+<style>
+.selectpicker,textarea{width:100%}
+hr{border:2px solid gray}
+.red{border: 3px solid #ff9191}
+</style>
+
+
+{% for d in data %}
+<form action="/edit_update" method="POST">
+
+<div class="row">
+    <div class="col">
+      	Входящий номер документа
+		<input type="text" name="f1" value='{{d[3]}}'>
+    </div>
+    <div class="col">
+		Дата поступления документа
+		<input type="date" name="f2" value='{{d[4]}}'>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+			Информация о заявителе	ФИО, адрес, категория, телефон
+			<textarea  name="f3" rows="5">{{d[5]}}</textarea>
+    </div>
+	
+    <div class="col">
+		От куда обратился заявитель
+        <select class="selectpicker" size="5" name="f4">
+			<option selected>{{d[6]}}</option>
+			{% for o in oo %}
+				<option value="{{o[1]}}">{{o[1]}}</option>
+			{% endfor %}
+		</select>			
+    </div>
+</div>
+
+
+
+
+<hr>
+
+<div class="row">
+    <div class="col">
+			Куда обратился заявитель
+			<div id='classificator1'>claas</div>
+			
+    </div>
+	
+	<div class="col">
+		<p>
+		номер
+		<input type="text" name="f6" value='{{d[8]}}'>
+		</p>
+		<p>
+		дата
+		<input type="date" name="f7" value='{{d[9]}}'>
+		</p>
+    </div>
+</div>
+
+
+<hr>
+
+<div class="row">
+    <div class="col">
+		Откуда поступил документ
+			<div id='classificator2'>claas</div>
+			
+	<textarea id="one"></textarea>
+	<button type="button" class='btn' id='add_to_classificator'>Добавить</button>
+	<button type="button" class='btn' id='remove_from_classificator'>Удалить</button>
+<script>
+$("#add_to_classificator").click(function(){
+	var one = $('#one').val()
+    $.post("/add_to_classificator",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+			show0();
+			show1();
+        });
+	alert('запись: (' +one+ ') добавлена');
+});
+</script>
+
+<!-- add -->
+<script>
+$("#remove_from_classificator").click(function(){
+	var one = $('#lol').val()
+    $.post("/remove_from_classificator",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+		show0();
+		show1();
+        });
+	alert('запись: (' +one+ ') удалена');
+});
+</script>	
+	
+    </div>
+	
+	<div class="col">
+		<p>
+		номер
+		<input type="text" name="f9" value='{{d[11]}}'>
+		</p>
+		<p>
+		дата
+		<input type="date" name="f10" value='{{d[12]}}'>
+		</p>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col">
+		Краткое содержание поднятых вопросов
+		<textarea name="f11">{{d[13]}}</textarea>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+		Тематика обращения
+			<div id='thems'>thems</div>
+			<textarea id="thems_i"></textarea>
+			<button type="button" class='btn' id='add_to_thems'>Добавить</button>
+			<button type="button" class='btn' id='remove_from_thems'>Удалить</button>
+    </div>
+</div>
+
+<script>
+$("#add_to_thems").click(function(){
+	var one = $('#thems_i').val()
+    $.post("/add_to_thems",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+			show2();
+        });
+	alert('запись: (' +one+ ') добавлена');
+});
+</script>
+
+<!-- add -->
+<script>
+$("#remove_from_thems").click(function(){
+	var one = $('#them').val()
+    $.post("/remove_from_thems",
+    {
+		'one': one,
+    },
+    function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status + "dss" + one);
+    });
+        $(document).ready(function(){
+		show2();
+        });
+	alert('запись: (' +one+ ') удалена');
+});
+</script>	
+
+<div class="row">
+    <div class="col">
+		Резолюция руководства
+		<textarea  name="f13">{{d[15]}}</textarea>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col red">
+		контрольный срок исполнения
+		<input type="date" name="f14" value='{{d[16]}}'>
+    </div>
+	
+	<div class="col">
+		фактический срок исполнения
+		<input type="date" name="f15" value='{{d[17]}}'>
+    </div>
+</div>
+
+<hr>
+
+<div class="row">
+    <div class="col">
+		исполнитель
+		<textarea name="f16">{{d[18]}}</textarea>
+    </div>
+	
+	<div class="col">
+		номер дела в котором хранится документ
+		<input type="text"  name="f17" value='{{d[19]}}'>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+		принятое решение
+        <select class="selectpicker" size="5" name='f18'>
+			<option selected>{{d[20]}}</option>
+            <option value="вопрос решен положительно">вопрос решен положительно</option>
+            <option value="даны разъяснения">даны разъяснения</option>     
+            <option value="отказано в рассмотрении">отказано в рассмотрении</option> 
+		    <option value="отправлено по принадлежности">отправлено по принадлежности</option> 
+		    <option value="находится в работе">находится в работе</option> 				
+		</select>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+		взято на дополнительный контроль
+        <select class="selectpicker" size="2" name="f19" >
+			<option selected>{{d[21]}}</option>
+            <option value="Да">Да</option>
+            <option value="Нет">Нет</option>     
+        </select>
+    </div>
+	
+	<div class="col">
+		дата дополнительного контроля
+		<input type="date" name="f20" value='{{d[22]}}'>
+   </div>
+</div>
+
+<hr>   
+ 
+
+<button type='submit'>Сохранить</button>
+</form>
+
+<br><br>
+  
+<script>
+        function show0()
+        {
+            $.ajax({
+                url: "/classificator",
+                cache: false,
+                success: function(html){
+                    $("#classificator2").html(html);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            show0();
+			//setInterval('show()',15000);
+        });
+		
+		        function show1()
+        {
+            $.ajax({
+                url: "/classificator1",
+                cache: false,
+                success: function(html){
+                    $("#classificator1").html(html);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            show1();
+        });
+		
+		function show2()
+        {
+            $.ajax({
+                url: "/thems",
+                cache: false,
+                success: function(html){
+                    $("#thems").html(html);
+                }
+            });
+        }
+
+        $(document).ready(function(){
+            show2();
+        });
+</script>
+  
+{% endfor %}
+
+		</div><!-- container -->
+    </body>
+</html>

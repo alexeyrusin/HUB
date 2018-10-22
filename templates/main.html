@@ -1,0 +1,161 @@
+{% include '/header.html' %}
+{% include '/menu.html' %}
+SELECT users.name, executor_subtask.subtask_id FROM executor_subtask INNER JOIN users ON executor_subtask.user_id=users.id  WHERE user_id=1 
+<div class="container">
+	<div id='main'></div>
+</div><!-- container -->
+
+</body>
+
+<!-- Отображение информации на главной странице согласно рангу -->
+<script>
+{% if session['user_rank'] == 0 %}
+	$(document).ready(function(){
+			function show()
+			{
+				$.ajax({
+					url: "/0actual",
+					cache: false,
+					success: function(html){
+						$("#main").html(html);
+					}
+				});
+			}
+
+			$(document).ready(function(){
+				show();
+			});
+	});
+
+</script>
+{% elif session['user_rank'] == 1 %}
+	$(document).ready(function(){
+			function show()
+			{
+				$.ajax({
+					url: "/isp",
+					cache: false,
+					success: function(html){
+						$("#main").html(html);
+					}
+				});
+			}
+
+			$(document).ready(function(){
+				show();
+			});
+	});
+	</script>
+{% elif session['user_rank'] == 2 %}
+	$(document).ready(function(){
+			function show()
+			{
+				$.ajax({
+					url: "/isp",
+					cache: false,
+					success: function(html){
+						$("#main").html(html);
+					}
+				});
+			}
+
+			$(document).ready(function(){
+				show();
+			});
+	});
+	</script>
+{% else %}
+	У Вас нет полномочий на просмотр данных.
+{% endif %}
+
+
+<script>
+    $(document).on('click', '#add', function() {
+		function show()
+		{
+			$.ajax({
+				url: "/add",
+				cache: false,
+				success: function(html){
+					$("#main").html(html);
+				}
+			});
+		}
+
+		$(document).ready(function(){
+			show();
+		});
+    });
+
+   $(document).on('click', '#status1', function() {
+		function show()
+		{
+			$.ajax({
+				url: "/status1",
+				cache: false,
+				success: function(html){
+					$("#main").html(html);
+				}
+			});
+		}
+
+		$(document).ready(function(){
+			show();
+		});
+    });
+
+   $(document).on('click', '#status0', function() {
+		function show()
+		{
+			$.ajax({
+				url: "/status0",
+				cache: false,
+				success: function(html){
+					$("#main").html(html);
+				}
+			});
+		}
+
+		$(document).ready(function(){
+			show();
+		});
+    });
+	
+   $(document).on('click', '#users', function() {
+		function show()
+		{
+			$.ajax({
+				url: "/users",
+				cache: false,
+				success: function(html){
+					$("#main").html(html);
+				}
+			});
+		}
+
+		$(document).ready(function(){
+			show();
+		});
+    });	
+
+
+//Добавить задачу	
+   $(document).on('click', '#add_tasks', function() {
+		function show()
+		{
+			$.ajax({
+				url: "/add_tasks",
+				cache: false,
+				success: function(html){
+					$("#main").html(html);
+				}
+			});
+		}
+
+		$(document).ready(function(){
+			show();
+		});
+    });	
+	
+</script>
+</html>
