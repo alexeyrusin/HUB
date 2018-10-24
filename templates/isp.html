@@ -1,6 +1,53 @@
 {% for d in data %}
-<p>{{d}}</p>
-{% endfor %}
+	<div class="table-responsive"> 
 
-{{comment}}
-<h2>files{{files}}</h2>
+		<table class="table table-bordered ">
+		  <thead>
+			
+			<tr>
+				<td><b>{{d[2]}}</b></td>
+			</tr>
+			<tr>
+				<td>ID:{{d[0]}}</td>
+				
+				<td>участвуем как 
+				{% if d[1] == 0 %}Заказчик
+				{% elif d[1] == 1 %}Уполномоченный орган
+				{% endif %}
+				</td>
+				
+		
+				
+				<td>{{tasks_category[d[3]][1]}}</td>
+
+				<td>{{d[4]}}</td>
+
+				<td>
+				{% if d[9] == 1 %}Разработка общей части
+				{% elif d[9] == 2 %}Разработка информационной карты
+				{% elif d[9] == 3 %}Разработка технического задания
+				{% elif d[9] == 4 %}Разработка обоснований НМЦК
+				{% elif d[9] == 5 %}Разработка проекта контракта
+				{% endif %}
+				</td>
+				
+				<td>
+				{% if d[10] == 0 %}необходимо разработать
+				{% elif d[10] == 1 %}согласован
+				{% elif d[10] == 2 %}требует доработки
+				{% elif d[10] == 3 %}отправлен на проверку
+				{% endif %}
+				</td>
+			</tr>
+		  </thead>
+		  <tbody>
+
+			<tr>
+				<td colspan='6'></td>
+			</tr>
+
+		  </tbody>
+		</table>
+		
+	</div>
+{% endfor %}

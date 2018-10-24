@@ -152,10 +152,14 @@ def isp():
 
         b = 'SELECT * FROM comment_subtask WHERE subtask_id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+')'
         comment = database(b)
-
-        files = 'ff'
         
-        return render_template('isp.html', data=data, files=a, comment=comment)
+        c = 'SELECT * FROM files_subtask WHERE subtask_id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+')'
+        files = database(c)
+
+        tasks_category = database(get.qery['tasks_category'])
+
+        
+        return render_template('isp.html', data=data, files=files, comment=comment, tasks_category=tasks_category)
 		
 #редактор заданий
 @app.route('/edit_task_lines/<value>', methods=['GET', 'POST'])
