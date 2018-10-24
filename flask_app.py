@@ -1,7 +1,9 @@
 from flask import Flask, session, render_template, request, redirect, g, url_for, send_from_directory
 import sqlite3
 import os
-
+from werkzeug.utils import secure_filename
+from werkzeug.contrib.fixers import ProxyFix
+UPLOAD_FOLDER = 'download'
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -157,9 +159,22 @@ def isp():
         files = database(c)
 
         tasks_category = database(get.qery['tasks_category'])
-
-        
         return render_template('isp.html', data=data, files=files, comment=comment, tasks_category=tasks_category)
+
+@app.route('/upload/<value>', methods=['GET', 'POST'])
+def upload_file(value):
+    if request.method == 'POST':
+        uploaded_files = request.files.getlist("file[]")
+        upload_dir = 'download/' + str(value)
+        for file in uploaded_files:
+            file.save(os.path.join(upload_dir, file.filename))
+    files = os.listdir('download/' + str(value))
+    if files == None:
+        files='файлы еще не загружались'
+    else:
+        pass
+    return render_template('u.html', files=files)
+
 		
 #редактор заданий
 @app.route('/edit_task_lines/<value>', methods=['GET', 'POST'])
@@ -261,6 +276,7 @@ def main(value):
                     for x in range(1, 8):
                         db_qery3 = "INSERT INTO subtask (task_id, name) VALUES ('" + str(task_maxid[0]) + "' , '" + str(x) + "')"
                         final = database(str(db_qery3))
+                        
 
                         #select subtask
                         db_qery4 = "SELECT MAX(id) FROM subtask"
@@ -269,6 +285,8 @@ def main(value):
                         
                         for e in executor:
                             if str(e[0]) == str(x):
+                                upload_dir = 'download/' + str(str(maxid[0]))
+                                os.mkdir(str(upload_dir))
                                 db_qery5 = "INSERT INTO executor_subtask (subtask_id, user_id) VALUES ('" + str(maxid[0]) + "' , '" + str(e[1]) + "')"
                                 final = database(str(db_qery5))
                             else:
