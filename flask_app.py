@@ -147,11 +147,15 @@ def from_archive(value):
 @app.route('/isp', methods=['GET', 'POST'])
 def isp():
     if request.method == 'GET':
-        a= 'SELECT users.name, executor_subtask.subtask_id FROM executor_subtask INNER JOIN users ON executor_subtask.user_id=users.id WHERE user_id='
-        b = str(+session['user_id'])
-        db_qery = a+b
-        data = database(db_qery)
-        return render_template('isp.html', data=data)
+        a = 'SELECT * FROM tasks, subtask WHERE subtask.id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+') AND subtask.task_id = tasks.id'
+        data = database(a)
+
+        b = 'SELECT * FROM comment_subtask WHERE subtask_id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+')'
+        comment = database(b)
+
+        files = 'ff'
+        
+        return render_template('isp.html', data=data, files=a, comment=comment)
 		
 #редактор заданий
 @app.route('/edit_task_lines/<value>', methods=['GET', 'POST'])
