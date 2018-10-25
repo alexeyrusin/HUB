@@ -43,11 +43,36 @@
 		  <tbody>
 
 			<tr>
-				<td colspan='6'></td>
+				<td colspan='6'>
+					<form action="upload\{{d[7]}}" method='post' enctype='multipart/form-data'>
+					 <input type='file'  name='file[]'>
+					 <input type='submit' value='Загрузить'>
+					</form>
+				
+				<div id='files_{{d[7]}}'>{{d[7]}}</div>
+				</td>
 			</tr>
 
 		  </tbody>
 		</table>
 		
 	</div>
+
+<script>
+        $(document).ready(function(){
+            show_files();
+        });
+		
+		function show_files()
+        {
+            $.ajax({
+                url: "/upload/{{d[7]}}",
+                cache: false,
+                success: function(html){
+                    $("#files_{{d[7]}}").html(html);
+                }
+            });
+        }
+</script>
+
 {% endfor %}

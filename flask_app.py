@@ -166,14 +166,22 @@ def upload_file(value):
     if request.method == 'POST':
         uploaded_files = request.files.getlist("file[]")
         upload_dir = 'download/' + str(value)
+        files = os.listdir('download/' + str(value))
+        new = 0
+        for f in files:
+            new+=1
         for file in uploaded_files:
-            file.save(os.path.join(upload_dir, file.filename))
+            name = file.filename.split('.')[-1]
+            sec_name = str(new)+'.'+str(name)
+            file.save(os.path.join(upload_dir, sec_name))
+            time = select_now()[0]
+            qery = "INSERT INTO files_subtask (subtask_id, file_name, time_posted, user_id) VALUES (" + "'" + str(value)+ "','" + str(sec_name) + "','" + str(time[0]) + "','" + str(session['user_id']) + "')"
+            final = database(qery)
     files = os.listdir('download/' + str(value))
-    if files == None:
-        files='файлы еще не загружались'
-    else:
-        pass
-    return render_template('u.html', files=files)
+    new=0
+    for f in files:
+        new+=1
+    return render_template('u.html', files=files, new=new)
 
 		
 #редактор заданий
