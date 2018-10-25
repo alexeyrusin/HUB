@@ -44,16 +44,10 @@
 
 			<tr>
 				<td colspan='6'>
-				<!--
 					<form action="upload\{{d[7]}}" method='post' enctype='multipart/form-data'>
 					 <input type='file'  name='file[]'>
 					 <input type='submit' value='Загрузить'>
 					</form>
-				-->
-				<input type='file' id='file_{{d[7]}}' name='file[]'>
-				<input type='submit' id='up_{{d[7]}}' value='Загрузить'>
-				
-				
 				<div id='files_{{d[7]}}'>{{d[7]}}</div>
 				</td>
 			</tr>
@@ -65,12 +59,13 @@
 
 <script>
         $(document).ready(function(){
-            show_files();
+            show_files{{d[7]}}();
         });
 		
-		function show_files()
+		function show_files{{d[7]}}()
         {
             $.ajax({
+				method: 'get',
                 url: "/upload/{{d[7]}}",
                 cache: false,
                 success: function(html){
@@ -81,17 +76,4 @@
 </script>
 
 
-<script>
-$("#up_{{d[7]}}").click(function(){
-	var one = $('#file_{{d[7]}}').prop('files')[0];
-	alert(one);
-    $.post("/upload/{{d[7]}}",
-    {
-		'one': one,
-    },
-    function(data, status){
-        alert("Data: " + data + "\nStatus: " + status + "dss" + one);
-    });
-});
-</script>
 {% endfor %}

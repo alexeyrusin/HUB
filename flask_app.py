@@ -177,11 +177,11 @@ def upload_file(value):
             time = select_now()[0]
             qery = "INSERT INTO files_subtask (subtask_id, file_name, time_posted, user_id) VALUES (" + "'" + str(value)+ "','" + str(sec_name) + "','" + str(time[0]) + "','" + str(session['user_id']) + "')"
             final = database(qery)
-    files = os.listdir('download/' + str(value))
-    new=0
-    for f in files:
-        new+=1
-    return render_template('u.html', files=files, new=new)
+            return redirect('main')
+    #GET
+    files = database('SELECT * FROM files_subtask WHERE subtask_id='+value+' ORDER BY time_posted DESC LIMIT 1')
+    status =  database("UPDATE subtask SET status=3 WHERE id="+str(value))
+    return render_template('u.html', files=files)
 
 		
 #редактор заданий
