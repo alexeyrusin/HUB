@@ -281,7 +281,7 @@ def main(value):
                     executor = database(get.qery['list_executor'])
                     
                     #Создает subtask с использованием основной матрици
-                    for x in range(1, 8):
+                    for x in range(1, 7):
                         db_qery3 = "INSERT INTO subtask (task_id, name) VALUES ('" + str(task_maxid[0]) + "' , '" + str(x) + "')"
                         final = database(str(db_qery3))
                         
@@ -299,7 +299,7 @@ def main(value):
                                 final = database(str(db_qery5))
                             else:
                                 pass
-                    return redirect(url_for('main', value=add_executor))
+                    #return redirect(url_for('main', value='0actual'))
 
 
                 
