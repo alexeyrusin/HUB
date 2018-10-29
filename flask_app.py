@@ -150,7 +150,7 @@ def from_archive(value):
 @app.route('/isp', methods=['GET', 'POST'])
 def isp():
     if request.method == 'GET':
-        a = 'SELECT * FROM tasks, subtask WHERE subtask.id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+') AND subtask.task_id = tasks.id'
+        a = 'SELECT * FROM tasks, subtask WHERE subtask.id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+') AND subtask.task_id = tasks.id AND tasks.status!=3'
         data = database(a)
 
         b = 'SELECT * FROM comment_subtask WHERE subtask_id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+')'
