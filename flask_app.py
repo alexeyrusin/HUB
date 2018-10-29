@@ -162,6 +162,14 @@ def isp():
         tasks_category = database(get.qery['tasks_category'])
         return render_template('isp.html', data=data, files=files, comment=comment, tasks_category=tasks_category)
 
+@app.route('/ob/<value>', methods=['GET', 'POST'])
+def ob(value):
+    if request.method == 'GET':
+        a = 'SELECT *, max(time_posted) FROM files_subtask  WHERE subtask_id IN (SELECT id FROM subtask WHERE task_id='+str(value)+') GROUP BY subtask_id'
+        files = database(a)
+        return render_template('u_all.html', files=files)
+        
+
 @app.route('/upload/<value>', methods=['GET', 'POST'])
 def upload_file(value):
     if request.method == 'POST':
