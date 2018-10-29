@@ -115,11 +115,12 @@ def logout():
     session.pop('user_id', None)
     return redirect(url_for('index'))   
 
-@app.route('/download/<value>', methods=['GET', 'POST'])
-def static2(value):
+@app.route('/download/<value1>/<value>', methods=['GET', 'POST'])
+def static2(value1,value):
     if 'user_id' not in session:
         return str('нет доступа')
-    return send_from_directory('download', value)
+    directory = 'download/' + str(value1)
+    return send_from_directory(directory, value)
 
 #добавление заданий
 @app.route('/create_task_lines/<value>', methods=['GET', 'POST'])
@@ -177,10 +178,10 @@ def upload_file(value):
             time = select_now()[0]
             qery = "INSERT INTO files_subtask (subtask_id, file_name, time_posted, user_id) VALUES (" + "'" + str(value)+ "','" + str(sec_name) + "','" + str(time[0]) + "','" + str(session['user_id']) + "')"
             final = database(qery)
+            status =  database("UPDATE subtask SET status=3 WHERE id="+str(value))
             return redirect('main')
     #GET
     files = database('SELECT * FROM files_subtask WHERE subtask_id='+value+' ORDER BY time_posted DESC LIMIT 1')
-    status =  database("UPDATE subtask SET status=3 WHERE id="+str(value))
     return render_template('u.html', files=files)
 
 		
