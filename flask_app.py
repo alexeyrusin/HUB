@@ -157,6 +157,7 @@ def isp():
         comment = database(b)
         
         c = 'SELECT * FROM files_subtask WHERE subtask_id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+')'
+        #c = 'SELECT * FROM files_subtask INNER JOIN tasks ON tasks.id=files_subtask.user_id WHERE subtask_id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+')'
         files = database(c)
 
         tasks_category = database(get.qery['tasks_category'])
@@ -165,7 +166,8 @@ def isp():
 @app.route('/ob/<value>', methods=['GET', 'POST'])
 def ob(value):
     if request.method == 'GET':
-        a = 'SELECT *, max(time_posted) FROM files_subtask  WHERE subtask_id IN (SELECT id FROM subtask WHERE task_id='+str(value)+') GROUP BY subtask_id'
+        a = 'SELECT *, max(time_posted) FROM files_subtask INNER JOIN subtask ON subtask.id=files_subtask.subtask_id  WHERE subtask_id IN (SELECT id FROM subtask WHERE task_id='+str(value)+') GROUP BY subtask_id'
+        #a = 'SELECT *, max(time_posted) FROM files_subtask INNER JOIN tasks ON tasks.id=files_subtask.user_id  WHERE subtask_id IN (SELECT id FROM subtask WHERE task_id='+str(value)+') GROUP BY subtask_id'
         files = database(a)
         return render_template('u_all.html', files=files)
         
