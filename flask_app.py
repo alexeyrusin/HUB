@@ -154,7 +154,15 @@ def status(value1, value2):
         db_qery ='UPDATE subtask SET status='+str(value2)+' WHERE id=' + str(value1)
         data = database(db_qery)
         return str(db_qery)
-    
+
+#Показывает исполнителей задачи
+##@app.route('/executors/<value>', methods=['GET', 'POST'])
+##def executors(value):
+##    if request.method == 'GET':
+##        db_qery = 'SELECT * FROM users WHERE users.id IN (SELECT user_id FROM executor_subtask WHERE executor_subtask.subtask_id='+str(value)+')'
+##        data = database(db_qery)
+##        return render_template('executors.html', data=data)
+
 @app.route('/isp', methods=['GET', 'POST'])
 def isp():
     if request.method == 'GET':
@@ -177,6 +185,12 @@ def ob(value):
         a = 'SELECT *, max(time_posted) FROM files_subtask INNER JOIN subtask ON subtask.id=files_subtask.subtask_id  WHERE subtask_id IN (SELECT id FROM subtask WHERE task_id='+str(value)+') GROUP BY subtask_id'
         #a = 'SELECT *, max(time_posted) FROM files_subtask INNER JOIN tasks ON tasks.id=files_subtask.user_id  WHERE subtask_id IN (SELECT id FROM subtask WHERE task_id='+str(value)+') GROUP BY subtask_id'
         files = database(a)
+
+##        def executors(value):
+##            db_qery = 'SELECT * FROM users WHERE users.id IN (SELECT user_id FROM executor_subtask WHERE executor_subtask.subtask_id='+str(value)+')'
+##            data = database(db_qery)
+##            return data
+##        return render_template('u_all.html', files=files, data=executors(value))
         return render_template('u_all.html', files=files)
         
 
@@ -239,32 +253,6 @@ def main(value):
                             users = database(get.qery['users'])
                             executor = database(get.qery['list_executor'])
                             return render_template(url, users=users, executor=executor)
-
-                        if value=='classificator':
-                            data = database(get.qery['classificator'])
-                            db_qery ='SELECT f8 FROM data WHERE id='+ str(session['edit'])
-                            vata = database(db_qery)
-                            return render_template(url, vata=vata[0], data=data)
-                        if value=='classificator1':
-                            data = database(get.qery['classificator'])
-                            db_qery ='SELECT f5 FROM data WHERE id='+ str(session['edit'])
-                            vata = database(db_qery)
-                            return render_template(url, vata=vata[0], data=data)
-
-                        if value=='thems':
-                            data = database(get.qery['thems'])
-                            db_qery ='SELECT f12 FROM data WHERE id='+ str(session['edit'])
-                            vata = database(db_qery)
-                            return render_template(url, vata=vata[0], data=data)
-
-                        if value=='timer':
-                            time = select_now()
-                            return str('time')
-                        
-                        if value=='thems2':
-                            data = database(get.qery['thems2'])
-                            vata = database(db_qery)
-                            return render_template(url, vata=vata[0], data=data)
                         else:
                             return render_template(url, value=value, data=data, cur_date=cur_date[0])
     ##POST
@@ -295,8 +283,6 @@ def main(value):
                     task_maxid = task_maxid[0]
                     add_executor = 'add_executor/' + str(task_maxid[0])
 
-
-
                     executor = database(get.qery['list_executor'])
                     
                     #Создает subtask с использованием основной матрици
@@ -318,7 +304,7 @@ def main(value):
                                 final = database(str(db_qery5))
                             else:
                                 pass
-                    #return redirect(url_for('main', value='0actual'))
+                    return redirect(url_for('main', value='main'))
 
 
                 
