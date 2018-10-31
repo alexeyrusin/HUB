@@ -1,7 +1,6 @@
 
 <table class="table table-bordered ">
 	<tbody>
-		{{files}}
 		{% for f in files %}
 		<tr>
 			<td>
@@ -22,12 +21,49 @@
 			</td>
 			
 			<td>
-				{% if f[7] == 3 %}На проверке
-				{% elif f[7] == 2 %}Требует доработки
-				{% elif f[7] == 1 %}Согласован
-				{% elif f[7] == 0 %}в работе
-				{% endif %}
+					{% if f[7] == 3 %}На проверке
+					{% elif f[7] == 2 %}Требует доработки
+					{% elif f[7] == 1 %}Согласован
+					{% elif f[7] == 0 %}в работе
+					{% endif %}
 			</td>
+
+			<td>
+			{% if f[6] != 6 %}
+				<div class="form-group">
+					<button type="button" class="btn btn-success" value='1' id="task_status1_{{f[0]}}">Согласован</button>
+					<button type="button" class="btn btn-danger" value='2' id="task_status2_{{f[0]}}">Отправить на доработку</button>
+				</div>
+			{% else %}
+			{% endif %}
+			</td>
+			<script>
+				$("#task_status1_{{f[0]}}").click(function(){
+					var one = $(this).val()
+					$.get("/status/{{f[0]}}/"+one,
+					{},
+					function(data, status){
+					});
+						$(document).ready(function(){
+							isp_reload();
+						});
+				});
+			</script> 
+				
+			<script>
+				$("#task_status2_{{f[0]}}").click(function(){
+					var one = $(this).val()
+					$.get("/status/{{f[0]}}/"+one,
+					{
+						
+					},
+					function(data, status){
+					});
+						$(document).ready(function(){
+							isp_reload();
+						});
+				});
+			</script> 
 		</tr>
 		{% endfor %}
 	</tbody>

@@ -146,6 +146,14 @@ def from_archive(value):
         db_qery ='UPDATE tasks SET status=2 WHERE id=' + str(value)
         data = database(db_qery)
         return str(db_qery)
+
+#Смена статуса
+@app.route('/status/<value1>/<value2>', methods=['GET', 'POST'])
+def status(value1, value2):
+    if request.method == 'GET':
+        db_qery ='UPDATE subtask SET status='+str(value2)+' WHERE id=' + str(value1)
+        data = database(db_qery)
+        return str(db_qery)
     
 @app.route('/isp', methods=['GET', 'POST'])
 def isp():

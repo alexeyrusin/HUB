@@ -1,3 +1,4 @@
+<div id='isp'>
 {% for d in data %}
 	<div class="table-responsive"> 
 
@@ -103,4 +104,20 @@
         }
 </script>
 
+<script>
+		
+		function isp_reload()
+        {
+            $.ajax({
+				method: 'get',
+                url: "/isp",
+                cache: false,
+                success: function(html){
+                    $("#isp").html(html);
+                }
+            });
+        }
+</script>
 {% endfor %}
+</div>
+
