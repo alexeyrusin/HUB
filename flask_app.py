@@ -156,12 +156,12 @@ def status(value1, value2):
         return str(db_qery)
 
 #Показывает исполнителей задачи
-##@app.route('/executors/<value>', methods=['GET', 'POST'])
-##def executors(value):
-##    if request.method == 'GET':
-##        db_qery = 'SELECT * FROM users WHERE users.id IN (SELECT user_id FROM executor_subtask WHERE executor_subtask.subtask_id='+str(value)+')'
-##        data = database(db_qery)
-##        return render_template('executors.html', data=data)
+@app.route('/executors/<value>', methods=['GET', 'POST'])
+def executors(value):
+    if request.method == 'GET':
+        db_qery = 'SELECT * FROM users WHERE users.id IN (SELECT user_id FROM executor_subtask WHERE executor_subtask.subtask_id='+str(value)+')'
+        data = database(db_qery)
+        return render_template('executors.html', data=data)
 
 @app.route('/isp', methods=['GET', 'POST'])
 def isp():

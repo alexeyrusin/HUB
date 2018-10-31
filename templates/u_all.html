@@ -21,7 +21,7 @@
 			</td>
 			
 			<td>
-				Исполнители: {{ data }}
+				Исполнители: <div id='isp{{f[0]}}'></div>
 			</td>
 			
 			<td>
@@ -67,7 +67,20 @@
 							isp_reload();
 						});
 				});
-			</script> 
+			</script>
+			
+			<script>
+			   $(document).ready(function(){ 
+						$.ajax({
+							url: "/executors/{{f[0]}}",
+							cache: false,
+							success: function(html){
+								$("#isp{{f[0]}}").html(html);
+							}
+						});
+					});
+
+			</script>
 		</tr>
 		{% endfor %}
 	</tbody>
