@@ -1,4 +1,5 @@
 <div id='isp'>
+
 {% for d in data %}
 	<div class="table-responsive"> 
 
@@ -6,10 +7,16 @@
 		  <thead>
 			
 			<tr>
-				<td><b>{{d[2]}}</b></td>
+				<td>
+					<b>{{d[2]}}</b>
+					статус:
+					{% if d[5] == 4 %}Исполнен
+					{% else %}В работе
+					{% endif %}
+				</td>
 			</tr>
 			<tr>
-				<td>ID:{{d[0]}}</td>
+				<td class='ispolnen_{{d[0]}}'>{{d[0]}}</td>
 				
 				<td>участвуем как 
 				{% if d[1] == 0 %}Заказчик
@@ -59,6 +66,7 @@
 						<div id='all_files_{{d[0]}}'></div>
 					</td>
 				</tr>
+
 				{% else %}
 				{% endif %}
 			

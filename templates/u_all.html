@@ -40,14 +40,33 @@
 				</div>
 			{% else %}
 			{% endif %}
+			</td>
+			</tr>
 			
-			{% if f[6] == 6  and f[7] == 1 %}
-				<div class="form-group">
-					<button type="button" class="btn btn-lg btn-success" value='1' id="ispolnen_{{f[0]}}">Исполнен</button>
-				</div>
+
+			{% if f[6] == 6 and f[7] == 1 %}
+			<tr>
+				<td colspan='5'>
+						<button type="button" class="btn btn-primary btn-lg btn-block" id="ispolnen_{{f[0]}}">присвоить статус Исполнен</button>
+						
+						<script>
+							$("#ispolnen_{{f[0]}}").click(function(){
+								$.get("/status_main/{{f[0]}}/",
+								{},
+								function(data, status){
+								});
+									$(document).ready(function(){
+										isp_reload();
+									});
+							});
+						</script>						
+
+				</td>
+			</tr>
+			{% elif f[6] == 6 and f[7] == 4 %}
+			Задача исполнена
 			{% else %}
 			{% endif %}
-			</td>
 			<script>
 				$("#task_status1_{{f[0]}}").click(function(){
 					var one = $(this).val()

@@ -110,6 +110,13 @@ def static2(value1,value):
     return send_from_directory(directory, value)
 
 
+#установка статуса исполнен для задачи
+@app.route('/status_main/<value>', methods=['GET', 'POST'])
+def status_main(value):
+    if request.method == 'GET':
+        db_qery = 'UPDATE tasks SET status=4 WHERE id IN (SELECT subtask.task_id FROM subtask WHERE subtask.id='+str(value)+')'
+        data = database(db_qery)       
+
 @app.route('/0actual', methods=['GET', 'POST'])
 def actual():
     if request.method == 'GET':
@@ -168,7 +175,7 @@ def executors(value):
 @app.route('/isp', methods=['GET', 'POST'])
 def isp():
     if request.method == 'GET':
-        a = 'SELECT * FROM tasks, subtask WHERE subtask.id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+') AND subtask.task_id = tasks.id AND tasks.status!=3'
+        a = 'SELECT * FROM tasks, subtask WHERE subtask.id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+') AND subtask.task_id = tasks.id AND tasks.status!=3 AND tasks.status!=4'
         data = database(a)
 
         b = 'SELECT * FROM comment_subtask WHERE subtask_id IN (SELECT subtask_id FROM executor_subtask WHERE user_id='+str(session['user_id'])+')'
