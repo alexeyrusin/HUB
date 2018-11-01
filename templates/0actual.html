@@ -1,5 +1,5 @@
 <div id='boss'>
-<H1>Актуальные задачи</H1>
+<H2>Актуальные задачи</H2>
 {% for u in data %}
 	<div class="table-responsive"> 
 
@@ -13,13 +13,15 @@
 			{% elif u[5] == 4 %}утвержден обобщителем
 			{% else %}нет статуса
 			{% endif %}
-				<td colspan='1' class="success">{{u[2]}} {{u[4]}} <button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Отправить в архив</button>	</td>			
+				<td colspan='1' class="success">{{data}}<b>{{u[2]}}</b></td>
+				
+				<td><button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Отправить в архив</button>	</td>
 			</tr>
 		  </thead>
 		  <tbody>
 			
 			<tr>
-				<td class='ob_id{{u[0]}}'></td>
+				<td  colspan='2' class='ob_id{{u[0]}}'></td>
 			</tr>		
 			
 		  </tbody>

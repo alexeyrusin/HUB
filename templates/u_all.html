@@ -40,6 +40,13 @@
 				</div>
 			{% else %}
 			{% endif %}
+			
+			{% if f[6] == 6  and f[7] == 1 %}
+				<div class="form-group">
+					<button type="button" class="btn btn-lg btn-success" value='1' id="ispolnen_{{f[0]}}">Исполнен</button>
+				</div>
+			{% else %}
+			{% endif %}
 			</td>
 			<script>
 				$("#task_status1_{{f[0]}}").click(function(){
