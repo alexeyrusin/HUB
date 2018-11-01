@@ -1,16 +1,10 @@
+
 <table class="table table-bordered ">
 	<tbody>
 		{% for f in files %}
 		<tr>
 			<td>
-				<a href='download\{{f[0]}}\{{f[1]}}'>
-								{% if f[6] == 1 %}Общая часть
-								{% elif f[6] == 2 %}Информационная карта
-								{% elif f[6] == 3 %}Техническое задание
-								{% elif f[6] == 4 %}Обоснование НМЦК
-								{% elif f[6] == 5 %}Проект контракта
-								{% elif f[6] == 6 %}Обобщенные данные
-								{% endif%}
+				<a href='download\{{f[0]}}\{{f[1]}}'>Файл
 				</a>
 			</td>
 			
@@ -24,22 +18,20 @@
 			</td>
 			
 			<td>
-					{% if f[7] == 3 %}На проверке
-					{% elif f[7] == 2 %}Требует доработки
-					{% elif f[7] == 1 %}Согласован
-					{% elif f[7] == 0 %}в работе
+					{% if f[7] == 3 %}У Вас на согласование
+					{% elif f[7] == 2 %}Отправлен на доработку
+					{% elif f[7] == 1 %}Утвержден
+					{% elif f[7] == 0 %}В работе
 					{% endif %}
 			</td>
 
 			<td>		
-			
-			{% if f[6] != 6 %}
+
 				<div class="form-group">
 					<button type="button" class="btn btn-success" value='1' id="task_status1_{{f[0]}}">Согласован</button>
 					<button type="button" class="btn btn-danger" value='2' id="task_status2_{{f[0]}}">Отправить на доработку</button>
 				</div>
-			{% else %}
-			{% endif %}
+
 			</td>
 			<script>
 				$("#task_status1_{{f[0]}}").click(function(){
@@ -49,7 +41,7 @@
 					function(data, status){
 					});
 						$(document).ready(function(){
-							isp_reload();
+							boss_reload();
 						});
 				});
 			</script> 
@@ -64,7 +56,7 @@
 					function(data, status){
 					});
 						$(document).ready(function(){
-							isp_reload();
+							boss_reload();
 						});
 				});
 			</script>

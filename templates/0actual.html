@@ -1,3 +1,5 @@
+<div id='boss'>
+<H1>Актуальные задачи</H1>
 {% for u in data %}
 	<div class="table-responsive"> 
 
@@ -11,66 +13,65 @@
 			{% elif u[5] == 4 %}утвержден обобщителем
 			{% else %}нет статуса
 			{% endif %}
-				<td colspan='3' class="success">{{u[2]}} {{u[4]}} <button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Отправить в архив</button>	</td>			
+				<td colspan='1' class="success">{{u[2]}} {{u[4]}} <button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Отправить в архив</button>	</td>			
 			</tr>
 		  </thead>
 		  <tbody>
-
-			<tr>
-				<td>Общая часть</td>
-				<td></td>
-				<td>{{u[0]}}</td>
-			</tr>
-			<tr>
-			  <td>Информационная карта</td>
-				<td></td>
-				<td>{{u[0]}}</td>
-			</tr>
 			
 			<tr>
-			  <td>Техническое задание</td>
-				<td></td>
-				<td>{{u[0]}}</td>
-			</tr>
-			
-			<tr>
-			  <td>Обоснование НМЦК</td>
-				<td></td>
-				<td>{{u[0]}}</td>
-			</tr>		
-
-			<tr>
-			  <td>Проект контракта</td>
-				<td></td>
-				<td>{{u[0]}}</td>
-			</tr>
-			
-			<tr>
-			  <td>Объединенный файл</td>
-				<td></td>
-				<td>{{u[0]}}</td>
+				<td class='ob_id{{u[0]}}'></td>
 			</tr>		
 			
 		  </tbody>
 		</table>
 		
 	</div>
+	
+<script>
+        $(document).ready(function(){
+            ob_id{{u[0]}}();
+        });
+		
+		function ob_id{{u[0]}}()
+        {
+            $.ajax({
+				method: 'get',
+                url: "/boss/{{u[0]}}",
+                cache: false,
+                success: function(html){
+                    $(".ob_id{{u[0]}}").html(html);
+                }
+            });
+        }
+</script>
+
 {% endfor %}
 
 <script>
 $(".to_archive").click(function(){
 	var one = $(this).val()
-	alert("/to_archive/"+one);
     $.get("/to_archive/"+one,
     {
 		
     },
     function(data, status){
-        alert("Data: " + data + "\nStatus: " + status);
     });
         $(document).ready(function(){
-			
+			boss_reload();
         });
-	alert('запись: (' +one+ ') удалена');
 });
-</script>	
+</script>
+
+<script>
+		function boss_reload()
+        {
+            $.ajax({
+				method: 'get',
+                url: "/0actual",
+                cache: false,
+                success: function(html){
+                    $("#boss").html(html);
+                }
+            });
+        }
+</script>

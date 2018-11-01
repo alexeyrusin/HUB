@@ -12,7 +12,6 @@ app.secret_key = os.urandom(24)
 class get():
     qery = {
             'users':'SELECT * FROM users',
-            '0actual':'SELECT * FROM tasks WHERE status!=3',
             '0archive':'SELECT * FROM tasks WHERE status=3',
             'list_executor':'SELECT * FROM executor_main ORDER BY type', 
 			
@@ -23,22 +22,10 @@ class get():
             'edit_tasks':'',
 	    'user_control_task':'SELECT * FROM users',
             
-
-            
             'add_tasks':'',
             
             'main':'SELECT * FROM data',
-            'status0':'SELECT * FROM data WHERE status=0 ORDER BY f14',
-            'status1':'SELECT * FROM data WHERE status=1 ORDER BY f14',
             'add':'',
-            'edit':'SELECT * FROM data WHERE id=',
-            'edit_oo':'SELECT * FROM tasks_category',
-            'edit_oo_thems':'SELECT * FROM thems',
-            'classificator':'SELECT * FROM classificator',
-            'classificator1':'SELECT * FROM classificator',
-            'thems':'SELECT * FROM thems',
-            'thems2':'SELECT * FROM thems',
-
             }
 
 class post():
@@ -122,6 +109,21 @@ def static2(value1,value):
     directory = 'download/' + str(value1)
     return send_from_directory(directory, value)
 
+
+@app.route('/0actual', methods=['GET', 'POST'])
+def actual():
+    if request.method == 'GET':
+        data = database('SELECT * FROM tasks WHERE status!=3')
+        return render_template('0actual.html', data=data)
+    
+@app.route('/boss/<value>', methods=['GET', 'POST'])
+def boss(value):
+    if request.method == 'GET':
+        a = 'SELECT *, max(time_posted) FROM files_subtask INNER JOIN subtask ON subtask.id=files_subtask.subtask_id WHERE task_id='+str(value)+' AND name=6'
+        files = database(a)
+        return render_template('u_boss.html', files=files)
+        
+    
 #добавление заданий
 @app.route('/create_task_lines/<value>', methods=['GET', 'POST'])
 def create_task_lines(value):
