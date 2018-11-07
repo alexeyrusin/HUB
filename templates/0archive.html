@@ -1,83 +1,71 @@
 <div id='boss'>
 <H1>Архив</H1>
-
-
 {% for u in data %}
-	<div class="table-responsive"> 
-
-		<table class="table table-bordered ">
-		  <thead>
-			<tr>
-			{% if u[5] == 0 %}в работе
-			{% elif u[5] == 1 %}утвержден директором
-			{% elif u[5] == 2 %}требует доработки
-			{% elif u[5] == 3 %}в архиве
-			{% elif u[5] == 4 %}Исполнен
-			{% else %}нет статуса
-			{% endif %}
-				<td colspan='1' class="success">Задача: <b>{{u[2]}}</b> | Контрольная дата:<b>{{u[4]}}</b></td>
-				
-				<td><button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Вернуть на доработку</button></td>
-			</tr>
-		  </thead>
-		  <tbody>
-			
-			<tr>
-				<td  colspan='2' class='ob_id{{u[0]}}'></td>
-			</tr>		
-			
-		  </tbody>
-		</table>
-		
-	</div>
-	
+<div class="table-responsive">
+   <table class="table table-bordered ">
+      <thead>
+         <tr>
+            {% if u[5] == 0 %}в работе
+            {% elif u[5] == 1 %}утвержден директором
+            {% elif u[5] == 2 %}требует доработки
+            {% elif u[5] == 3 %}в архиве
+            {% elif u[5] == 4 %}Исполнен
+            {% else %}нет статуса
+            {% endif %}
+            <td colspan='1' class="success">Задача: <b>{{u[2]}}</b> | Контрольная дата:<b>{{u[4]}}</b></td>
+            <td><button class="btn btn-primary to_archive" type='button'  value={{u[0]}}>Вернуть на доработку</button></td>
+         </tr>
+      </thead>
+      <tbody>
+         <tr>
+            <td  colspan='2' class='ob_id{{u[0]}}'></td>
+         </tr>
+      </tbody>
+   </table>
+</div>
 <script>
-        $(document).ready(function(){
-            ob_id{{u[0]}}();
-        });
-		
-		function ob_id{{u[0]}}()
-        {
-            $.ajax({
-				method: 'get',
-                url: "/boss/{{u[0]}}",
-                cache: false,
-                success: function(html){
-                    $(".ob_id{{u[0]}}").html(html);
-                }
-            });
-        }
+   $(document).ready(function(){
+       ob_id{{u[0]}}();
+   });
+   
+   function ob_id{{u[0]}}()
+   {
+       $.ajax({
+   method: 'get',
+           url: "/boss/{{u[0]}}",
+           cache: false,
+           success: function(html){
+               $(".ob_id{{u[0]}}").html(html);
+           }
+       });
+   }
 </script>
-
 {% endfor %}
-
-
 <script>
-		function boss_reload()
-        {
-            $.ajax({
-				method: 'get',
-                url: "/0actual",
-                cache: false,
-                success: function(html){
-                    $("#boss").html(html);
-                }
-            });
-        }
+   function boss_reload()
+         {
+             $.ajax({
+   		method: 'get',
+                 url: "/0actual",
+                 cache: false,
+                 success: function(html){
+                     $("#boss").html(html);
+                 }
+             });
+         }
 </script>
-
 <script>
-$(".to_archive").click(function(){
-	var one = $(this).val()
-    $.get("/from_archive/"+one,
-    {
-		
-    },
-    function(data, status){
-
-    });
-        $(document).ready(function(){
-			boss_reload();
-        });
-});
+   $(".to_archive").click(function(){
+   	var one = $(this).val()
+       $.get("/from_archive/"+one,
+       {
+   		
+       },
+       function(data, status){
+   
+       });
+           $(document).ready(function(){
+   			boss_reload();
+           });
+   });
 </script>
