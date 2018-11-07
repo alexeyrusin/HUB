@@ -47,11 +47,12 @@
 			{% if f[6] == 6 and f[7] == 1 %}
 			<tr>
 				<td colspan='5'>
-						<button type="button" class="btn btn-primary btn-lg btn-block" id="ispolnen_{{f[0]}}">присвоить статус Исполнен</button>
+						<button type="button" class="btn btn-primary btn-lg btn-block" value='4' id="ispolnen_{{f[0]}}">присвоить статус Исполнен</button>
 						
 						<script>
 							$("#ispolnen_{{f[0]}}").click(function(){
-								$.get("/status_main/{{f[0]}}/",
+								var status = $(this).val()
+								$.get("/status_main/{{f[0]}}/"+status,
 								{},
 								function(data, status){
 								});

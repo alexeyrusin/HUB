@@ -111,10 +111,10 @@ def static2(value1,value):
 
 
 #установка статуса исполнен для задачи
-@app.route('/status_main/<value>', methods=['GET', 'POST'])
-def status_main(value):
+@app.route('/status_main/<value1>/<value2>', methods=['GET', 'POST'])
+def status_main(value1, value2):
     if request.method == 'GET':
-        db_qery = 'UPDATE tasks SET status=4 WHERE id IN (SELECT subtask.task_id FROM subtask WHERE subtask.id='+str(value)+')'
+        db_qery = 'UPDATE tasks SET status='+str(value2)+' WHERE id IN (SELECT subtask.task_id FROM subtask WHERE subtask.id='+str(value1)+')'
         data = database(db_qery)       
 
 @app.route('/0actual', methods=['GET', 'POST'])
