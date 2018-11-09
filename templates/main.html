@@ -179,6 +179,12 @@
 <!-- ЧАТ -->
 <script>
 	$(document).ready(function(){
+		var timerId = setInterval(function() {
+			chat();
+			}, 10000);
+	});
+
+
 			function chat()
 			{
 				$.ajax({
@@ -190,9 +196,6 @@
 				});
 			}
 
-			$(document).ready(function(){
-				chat();
-			});
-	});
+
 </script>
 </html>
