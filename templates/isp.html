@@ -58,16 +58,9 @@
 				<td colspan='6'>
 					<form action="upload/{{d[7]}}" method='post' enctype='multipart/form-data' id='2check_file{{d[7]}}'>
 					 <input type='file'  name='file[]' id='check_file{{d[7]}}'>
+					 <input type='submit' id='submit' value='Загрузить'>
 					</form>
 					
-				<script>
-				       $("#check_file{{d[7]}}").click(function(){
-					   alert('ff');
-					   var file = $('#check_file{{d[7]}}').val();
-					   if ( file.length > 0 ) {$('#2check_file{{d[7]}}').append("<input type='submit' id='submit' value='Загрузить'>") }
-					   else {alert(file.length)};
-						});
-				</script>
 				
 				
 				<div id='files_{{d[7]}}'>{{d[7]}}</div>
@@ -140,4 +133,3 @@
 </script>
 {% endfor %}
 </div>
-
