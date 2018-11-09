@@ -106,8 +106,6 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = session['user_id']
-    else:
-        redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
@@ -234,16 +232,20 @@ def upload_file(value):
             status =  database("UPDATE subtask SET status=3 WHERE id="+str(value))
             return redirect('main')
     #GET
-    files = database('SELECT * FROM files_subtask WHERE subtask_id='+value+' ORDER BY time_posted DESC LIMIT 1')
+    files = database('SELECT * FROM files_subtask WHERE subtask_id='+value+' ORDER BY time_posted DESCIMIT 1')
     return render_template('u.html', files=files)
 
 #Чат
 @app.route('/chat', methods=['GET', 'POST'])
 def chat():
     if request.method == 'GET':
-        db_qery ='SELECT * FROM chat'
+        db_qery ='SELECT * FROM chat ORDER BY time_posted DESC'
         data = database_chat(db_qery)
-        return render_template('edit_task_lines.html', data=data)
+        return render_template('chat.html', data=data)
+    time = select_now()[0]
+    one = request.form['one']
+    db_qery = "INSERT INTO chat (user_name, time_posted, text) VALUES ('" + str(session['user_name']) + "' , '" +  str(time[0]) + "' , '" + str(one) + "')"
+    final = database_chat(str(db_qery))
 
 #редактор заданий
 @app.route('/edit_task_lines/<value>', methods=['GET', 'POST'])

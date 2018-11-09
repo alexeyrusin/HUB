@@ -1,0 +1,38 @@
+<input type="text" class="form-control" id="post_chat_text" placeholder='текст'>
+<button class="btn btn-primary btn-lg btn-block" type='button' id='post_chat'>Отправить</button>
+
+
+	<div class="table-responsive chat"> 
+		<table class="table table-bordered ">
+		  <thead>
+		  </thead>
+		  <tbody>
+			{% for d in data %}
+			<tr>
+				<td>
+					<b>{{d}}</b>
+				</td>
+			</tr>
+			{% endfor %}
+		  </tbody>
+		</table>
+	</div>
+
+<script>
+
+
+
+$("#post_chat").click(function(){
+	var one = $('#post_chat_text').val()
+    $.post("/chat",
+    {
+		'one': one,
+    },
+    function(data, status){
+		alert(status);
+    });
+        $(document).ready(function(){
+			chat();
+        });
+});
+</script>
