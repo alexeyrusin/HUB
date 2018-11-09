@@ -6,6 +6,7 @@ from werkzeug.contrib.fixers import ProxyFix
 UPLOAD_FOLDER = 'download'
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.secret_key = os.urandom(24)
 
 
@@ -232,7 +233,7 @@ def upload_file(value):
             status =  database("UPDATE subtask SET status=3 WHERE id="+str(value))
             return redirect('main')
     #GET
-    files = database('SELECT * FROM files_subtask WHERE subtask_id='+value+' ORDER BY time_posted DESCIMIT 1')
+    files = database('SELECT * FROM files_subtask WHERE subtask_id='+str(value)+' ORDER BY time_posted DESC LIMIT 1')
     return render_template('u.html', files=files)
 
 #Чат
