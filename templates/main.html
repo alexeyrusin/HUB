@@ -181,7 +181,7 @@
 	$(document).ready(function(){
 		var timerId = setInterval(function() {
 			chat();
-			}, 10000);
+			}, 1000);
 	});
 
 
@@ -190,6 +190,7 @@
 				$.ajax({
 					url: "/chat",
 					cache: false,
+					ifModified: true,
 					success: function(html){
 						$("#chat").html(html);
 					}
