@@ -35,7 +35,17 @@ class post():
             'status1':'UPDATE data SET status=1 WHERE id=',
             }
 
-
+def database_chat(db_qery):
+    try:
+        conn = sqlite3.connect('chat.db')
+        c = conn.cursor()
+        c.execute(db_qery)
+        data = c.fetchall()
+        conn.commit()
+        return data
+    except Exception as error:
+        return str(error)
+    
 def database(db_qery):
     try:
         conn = sqlite3.connect('db.db')
@@ -96,12 +106,14 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = session['user_id']
+    else:
+        redirect(url_for('index'))
 
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return redirect(url_for('index'))   
-
+    return redirect(url_for('index'))
+                 
 @app.route('/download/<value1>/<value>', methods=['GET', 'POST'])
 def static2(value1,value):
     if 'user_id' not in session:
@@ -225,7 +237,14 @@ def upload_file(value):
     files = database('SELECT * FROM files_subtask WHERE subtask_id='+value+' ORDER BY time_posted DESC LIMIT 1')
     return render_template('u.html', files=files)
 
-		
+#Чат
+@app.route('/chat', methods=['GET', 'POST'])
+def chat():
+    if request.method == 'GET':
+        db_qery ='SELECT * FROM chat'
+        data = database_chat(db_qery)
+        return render_template('edit_task_lines.html', data=data)
+
 #редактор заданий
 @app.route('/edit_task_lines/<value>', methods=['GET', 'POST'])
 def edit_task_lines(value):
@@ -352,4 +371,4 @@ def main(value):
 
 if __name__ == '__main__':
     app.config['TEMPLATES_AUTO_RELOAD']=True
-    app.run(debug=True,use_reloader=True)
+    app.run(debug=True,use_reloader=True,   host="192.168.0.108", port=5000)

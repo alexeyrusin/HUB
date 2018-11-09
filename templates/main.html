@@ -1,6 +1,22 @@
 {% include '/header.html' %}
 {% include '/menu.html' %}
  
+<style>
+#chat {
+	box-shadow: -18px 0 20px -20px #333, 18px 0 20px -20px #333;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 10px;
+	width:300px;
+	height: 300px;
+	position: fixed; /* Абсолютное позиционирование */
+    bottom: 15px; /* Положение от нижнего края */
+    right: 15px; /* Положение от правого края */
+    line-height: 1px;
+}
+</style>
+	<div id='chat'>CHAT</div>
+ 
 <div class="container">
 	<div id='main'></div>
 </div><!-- container -->
