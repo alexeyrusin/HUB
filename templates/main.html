@@ -56,6 +56,7 @@
 	<div id='main'></div>
 </div><!-- container -->
 <audio id="chatAudio"><source src="/static/notify.mp3" type="audio/mpeg">
+<audio id="chatAudioCat"><source src="/static/cat.mp3" type="audio/mpeg">
 </body>
 
 <!-- Отображение информации на главной странице согласно рангу -->
@@ -215,7 +216,6 @@
 <script>
 	$(document).ready(function(){
 		var timerId = setInterval(function() {
-			//$('<audio id="chatAudio"><source src="/static/notify.mp3" type="audio/mpeg">').appendTo('body');
 			chat();
 			}, 5000);
 	});
@@ -235,8 +235,10 @@
             }
             else
             {
-				$('#chatAudio')[0].play();
+				
+				$('#chatAudio')[0].play(); 
 				show_chat_massage();
+				
             }
 					
 					}
