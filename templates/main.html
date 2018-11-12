@@ -3,43 +3,59 @@
  
 <style>
 
+#chat_body{
+    resize: both;
+    overflow: auto;
+	box-shadow: -18px 0 20px -20px #333, 18px 0 20px -20px #333;
+    background-color: red;
+    padding: 10px;
+    border-radius: 10px;
+	width:500px;
+	height:500px;
+	position: fixed; /* Абсолютное позиционирование */
+    bottom: 15px; /* Положение от нижнего края */
+    right: 15px; /* Положение от правого края */
+    line-height: 1px;
+}
+
 #chat_box {
 	box-shadow: -18px 0 20px -20px #333, 18px 0 20px -20px #333;
     background-color: aliceblue;
     padding: 10px;
     border-radius: 10px;
-	width:500px;
-	height: 200px;
-	position: fixed; /* Абсолютное позиционирование */
-    bottom: 500px; /* Положение от нижнего края */
+	min-width:500px;
+	mix-height: 30%;
+    bottom: 300px; /* Положение от нижнего края */
     right: 15px; /* Положение от правого края */
     line-height: 1px;
 
 }
 #chat {
+	min-height: 70%;
 	display:grid;
 	box-shadow: -18px 0 20px -20px #333, 18px 0 20px -20px #333;
     background-color: aliceblue;
     padding: 10px;
     border-radius: 10px;
 	width:500px;
-	height: 500px;
-	position: fixed; /* Абсолютное позиционирование */
+	height: 300px;
     bottom: 15px; /* Положение от нижнего края */
     right: 15px; /* Положение от правого края */
     line-height: 1px;
 }
 </style>
-
-	<div id='chat'>Чат не работает</div>
-	<div id='chat_box'>
-		  <input type="text" class="form-control" id="post_chat_text" placeholder="текст">
-		  <button class="btn btn-primary btn-lg btn-block" type="button" id="post_chat">Отправить</button>
+	<div id='chat_body'>
+		<div id='chat'>Чат не работает</div>
+		
+		<div id='chat_box'>
+			  <textarea class="form-control" id="post_chat_text" placeholder="текст"></textarea>
+			  <button class="btn btn-primary btn-lg btn-block" type="button" id="post_chat">Отправить</button>
+		</div>
 	</div>
 <div class="container">
 	<div id='main'></div>
 </div><!-- container -->
-
+<audio id="chatAudio"><source src="/static/notify.mp3" type="audio/mpeg">
 </body>
 
 <!-- Отображение информации на главной странице согласно рангу -->
@@ -199,8 +215,9 @@
 <script>
 	$(document).ready(function(){
 		var timerId = setInterval(function() {
+			//$('<audio id="chatAudio"><source src="/static/notify.mp3" type="audio/mpeg">').appendTo('body');
 			chat();
-			}, 1000);
+			}, 5000);
 	});
 
 
@@ -218,6 +235,7 @@
             }
             else
             {
+				$('#chatAudio')[0].play();
 				show_chat_massage();
             }
 					
@@ -250,11 +268,15 @@ $("#post_chat").click(function(){
 		alert(status);
     });
         $(document).ready(function(){
+			show_chat_massage()
         });
 });
 
 		
 </script>
 	
+
+
+
 
 </html>
