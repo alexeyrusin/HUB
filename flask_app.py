@@ -1,6 +1,7 @@
-from flask import Flask, session, render_template, request, redirect, g, url_for, send_from_directory
+from flask import Flask, session, render_template, request, redirect, g, url_for, send_from_directory, make_response
 import sqlite3
 import os
+from flask import jsonify
 from werkzeug.utils import secure_filename
 from werkzeug.contrib.fixers import ProxyFix
 UPLOAD_FOLDER = 'download'
@@ -38,7 +39,7 @@ class post():
 
 def database_chat(db_qery):
     try:
-        conn = sqlite3.connect('chat.db')
+        conn = sqlite3.connect('static/chat.db')
         c = conn.cursor()
         c.execute(db_qery)
         data = c.fetchall()
@@ -371,6 +372,16 @@ def main(value):
                                       
         except Exception as e :
             return str(e)
+
+@app.route('/sitemap.xml')
+def sitemap():
+    try:
+        sitemap_xml = render_template('sitemap.xml')
+        response= make_response(sitemap_xml)
+        response.headers["Content-Type"] = "application/xml"
+        return response
+    except Exception as e:
+        return(str(e))
 
 if __name__ == '__main__':
     app.config['TEMPLATES_AUTO_RELOAD']=True

@@ -2,6 +2,20 @@
 {% include '/menu.html' %}
  
 <style>
+
+#chat_box {
+	box-shadow: -18px 0 20px -20px #333, 18px 0 20px -20px #333;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 10px;
+	width:500px;
+	height: 200px;
+	position: fixed; /* Абсолютное позиционирование */
+    bottom: 500px; /* Положение от нижнего края */
+    right: 15px; /* Положение от правого края */
+    line-height: 1px;
+
+}
 #chat {
 	display:grid;
 	box-shadow: -18px 0 20px -20px #333, 18px 0 20px -20px #333;
@@ -16,8 +30,12 @@
     line-height: 1px;
 }
 </style>
+
 	<div id='chat'>Чат не работает</div>
- 
+	<div id='chat_box'>
+		  <input type="text" class="form-control" id="post_chat_text" placeholder="текст">
+		  <button class="btn btn-primary btn-lg btn-block" type="button" id="post_chat">Отправить</button>
+	</div>
 <div class="container">
 	<div id='main'></div>
 </div><!-- container -->
@@ -177,6 +195,7 @@
 </script>
 
 <!-- ЧАТ -->
+
 <script>
 	$(document).ready(function(){
 		var timerId = setInterval(function() {
@@ -188,15 +207,54 @@
 			function chat()
 			{
 				$.ajax({
-					url: "/chat",
-					cache: false,
+					url: "/static/chat.db",
+					cache: true,
 					ifModified: true,
-					success: function(html){
-						$("#chat").html(html);
+					success: function(result, textStatus, xhr, status){
+
+				            if(xhr.status == 304)
+            {
+				//nothing
+            }
+            else
+            {
+				show_chat_massage();
+            }
+					
 					}
 				});
 			}
 
 
+			
+		function show_chat_massage()
+		{
+			$.ajax({
+				url: "/chat",
+				cache: false,
+				success: function(html){
+					$("#chat").html(html);
+				}
+			});
+		}
+		
+		
+
+$("#post_chat").click(function(){
+	var one = $('#post_chat_text').val()
+    $.post("/chat",
+    {
+		'one': one,
+    },
+    function(data, status){
+		alert(status);
+    });
+        $(document).ready(function(){
+        });
+});
+
+		
 </script>
+	
+
 </html>
