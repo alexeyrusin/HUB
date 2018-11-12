@@ -1,0 +1,34 @@
+<style>
+	.name{font-size:11px;}
+	.chat{max-width:100%}
+</style>
+	<div class="table-responsive chat"> 
+		<table class="table table-bordered ">
+		  <thead>
+		  </thead>
+		  <tbody>
+			{% for d in data %}
+			<tr>
+				<td>
+					<span class='name'>
+					{% if d[1] == 'Рыжий кот'%}
+						<img src='/static/cat.png' />
+					{% elif d[1] == 'Женя Питерский  1'%}
+						<img src='/static/1.gif' height='80px' />
+					{% else %}
+					{% endif %}
+					{{d[1]}} {{d[2]}}
+					</span>
+					
+					<p>
+					- {{d[3]}}
+					</p>
+				</td>
+			</tr>
+			{% endfor %}
+		  </tbody>
+		</table>
+	</div>
+
+<script>
+

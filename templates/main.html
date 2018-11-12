@@ -6,10 +6,10 @@
 #chat_body{
 	box-shadow: -18px 0 20px -20px #333, 18px 0 20px -20px #333;
     background-color: aliceblue;
+	border-radius: 5px;
     padding: 10px;
-    border-radius: 10px;
-	width:500px;
-	height:500px;
+	max-width:500px;
+	height:400px;
 	position: fixed; /* Абсолютное позиционирование */
     bottom: 15px; /* Положение от нижнего края */
     right: 15px; /* Положение от правого края */
@@ -20,6 +20,7 @@
 	width:100%;
 	mix-height: 30%;
     line-height: 1px;
+	bottom: 1px;
 }
 
 #chat {
@@ -30,14 +31,15 @@
     line-height: 1px;
 }
 </style>
-	<div id='chat_body'>
+	<div id='chat_body'><div class="container">
 		<div id='chat'>Чат не работает</div>
 		
 		<div id='chat_box'>
-			  <textarea class="form-control" id="post_chat_text" placeholder="текст"></textarea>
+			  <input type='text' class="form-control" id="post_chat_text" placeholder="текст">
 			  <button class="btn btn-primary btn-lg btn-block" type="button" id="post_chat">Отправить</button>
 		</div>
-	</div>
+		
+	</div></div>
 <div class="container">
 	<div id='main'></div>
 </div><!-- container -->
@@ -262,9 +264,4 @@ $("#post_chat").click(function(){
 
 		
 </script>
-	
-
-
-
-
 </html>
