@@ -5,10 +5,10 @@
  <nav class="navbar navbar-default navbar-fixed-bottom">
 
 
-		<div id='chat'>Чат не работает</div>
+		<div id='chat'></div>
 		
 		<div id='chat_box'>
-			  <input type='text' class="form-control" id="post_chat_text" placeholder="текст"><button class="btn btn-primary btn-lg btn-block" type="button" id="post_chat"><i class="fas fa-download"></i></button>
+			  <input type='text' class="form-control" name="post_chat_text" id="post_chat_text" placeholder="текст"><button class="btn btn-primary btn-lg btn-block" type="button" id="post_chat">Отправить</button>
 		</div>
 		
 
@@ -19,7 +19,7 @@
 	<div id='main'></div>
 </div><!-- container -->
 <audio id="chatAudio"><source src="/static/notify.mp3" type="audio/mpeg">
-<audio id="chatAudioCat"><source src="/static/cat.mp3" type="audio/mpeg">
+<!--<audio id="chatAudio"><source src="/static/cat.mp3" type="audio/mpeg">-->
 </body>
 
 <!-- Отображение информации на главной странице согласно рангу -->
@@ -234,6 +234,7 @@ $("#post_chat").click(function(){
     });
         $(document).ready(function(){
 			show_chat_massage()
+			 $("input[name=post_chat_text]").val('')
         });
 });
 
