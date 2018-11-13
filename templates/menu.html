@@ -2,7 +2,6 @@
 body {
   min-height: 2000px;
   padding-top: 70px;
-  
 }
 .badger-warning: {
     background: #f0ad4e
@@ -42,9 +41,7 @@ body {
 			</ul>			
 			<ul class="nav navbar-nav navbar-right">
 		{% elif session['user_rank'] == 1 %}
-				вы обобщаете
-		{% elif session['user_rank'] == 2 %}
-				вы исполняете 
+		{% elif session['user_rank'] == 2 %}		
 		{% else %}
 				У Вас нет прав на выполнение каких-либо действий.
 		{% endif %}
