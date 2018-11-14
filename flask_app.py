@@ -109,6 +109,7 @@ def before_request():
     if 'user_id' in session:
         g.user = session['user_id']
 
+
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)

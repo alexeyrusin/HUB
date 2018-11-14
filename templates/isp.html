@@ -9,45 +9,52 @@
 			
 			<tr>
 				<td>
-					<b>{{d[2]}}</b>
-					статус:
+					<p>id: {{d[0]}}</p>
+					<p><b>{{d[2]}}</b></p>
+					<p>статус:
 					{% if d[5] == 4 %}Исполнен
 					{% elif d[5] == 2 %}Требуется доработка
 					{% elif d[5] == 1 %}Утверждено директором
 					{% else %}В работе
 					{% endif %}
+					</p>
+					
+					<p class='ispolnen_{{d[0]}}'>контрольный срок: {{d[4]}}</p>
+					
+					<p>
+					Комментарий начальника:
+					{{ d[6] }}
+					</p>
 				</td>
+
 			</tr>
+			
+			
 			<tr>
-				<td class='ispolnen_{{d[0]}}'>{{d[0]}}</td>
+
+				<td>{{tasks_category[d[3]][1]}}
 				
-				<td>участвуем как 
+				участвуем как 
 				{% if d[1] == 0 %}Заказчик
 				{% elif d[1] == 1 %}Уполномоченный орган
 				{% endif %}
-				</td>
 				
-		
+				,<b>
+				Ваша задача:
+				{% if d[9] == 1 %}разработка общей части
+				{% elif d[9] == 2 %}разработка информационной карты
+				{% elif d[9] == 3 %}разработка технического задания
+				{% elif d[9] == 4 %}разработка обоснований НМЦК
+				{% elif d[9] == 5 %}разработка проекта контракта
+				{% elif d[9] == 6 %}обобщить данные				
+				{% endif %},
+				</b>
 				
-				<td>{{tasks_category[d[3]][1]}}</td>
-
-				<td>{{d[4]}}</td>
-
-				<td>
-				{% if d[9] == 1 %}Разработка общей части
-				{% elif d[9] == 2 %}Разработка информационной карты
-				{% elif d[9] == 3 %}Разработка технического задания
-				{% elif d[9] == 4 %}Разработка обоснований НМЦК
-				{% elif d[9] == 5 %}Разработка проекта контракта
-				{% elif d[9] == 6 %}Обобщить данные				
-				{% endif %}
-				</td>
-				
-				<td>
-				{% if d[10] == 0 %}необходимо разработать
-				{% elif d[10] == 1 %}согласован
-				{% elif d[10] == 2 %}требует доработки
-				{% elif d[10] == 3 %}отправлен на проверку
+				статус:
+				{% if d[10] == 0 %}<b style='background-color: yellow;'>необходимо разработать</b>
+				{% elif d[10] == 1 %}<b style='background-color: #08ea08;'>согласован</b>
+				{% elif d[10] == 2 %}<b style='background-color: red;'>требует доработки</b>
+				{% elif d[10] == 3 %}<b style='background-color:#b9b9fd;'>отправлен на проверку</b>
 				{% endif %}
 				</td>
 			</tr>
@@ -55,13 +62,14 @@
 		  <tbody>
 
 			<tr>
-				<td colspan='6'>
+				<td>
+				<div class="form-group">
 					<form action="upload/{{d[7]}}" method='post' enctype='multipart/form-data' id='2check_file{{d[7]}}'>
 					 <input type='file'  class="btn btn-primary" name='file[]' id='check_file{{d[7]}}'>
 					 <br>
 					 <input type='submit' class="btn btn-primary btn-lg" id='submit' value='Загрузить'>
 					</form>
-					
+				</div>
 				
 				
 				<div id='files_{{d[7]}}'>{{d[7]}}</div>
