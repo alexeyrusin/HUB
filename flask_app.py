@@ -373,6 +373,8 @@ def main(value):
                                       
         except Exception as e :
             return str(e)
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/sitemap.xml')
 def sitemap():
